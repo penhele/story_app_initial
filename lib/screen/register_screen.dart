@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:story_app_initial/model/user.dart';
@@ -34,10 +35,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Register Screen")),
+      appBar: AppBar(title: const Text("Register Screen"), centerTitle: true,),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 300),
+          constraints: const BoxConstraints(maxWidth: 325),
           child: Form(
             key: formKey,
             child: Column(
@@ -46,19 +47,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 TextFormField(
                   controller: emailController,
+                  // keyboardType: TextInputType.emailAddress
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email.';
                     }
                     return null;
                   },
-                  decoration: const InputDecoration(hintText: "Email"),
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    prefixIcon: Icon(Icons.email, color: Colors.blueAccent),
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.blueAccent,
+                        width: 2,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: "Password"),
+                  decoration: InputDecoration(
+                    hintText: "Password",
+                    prefixIcon: Icon(Icons.password, color: Colors.blueAccent),
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.blueAccent,
+                        width: 2,
+                      ),
+                    ),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password.';
@@ -81,12 +115,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (result) widget.onRegister();
                         }
                       },
-                      child: const Text("REGISTER"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 5,
+                      ),
+                      child: const Text(
+                        "REGISTER",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                const SizedBox(height: 8),
-                OutlinedButton(
-                  onPressed: () => widget.onLogin(),
-                  child: const Text("LOGIN"),
+                const SizedBox(height: 24),
+
+                Align(
+                  alignment: Alignment.center,
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Have an account? ",
+                      style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: "Login now!",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () => widget.onRegister(),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

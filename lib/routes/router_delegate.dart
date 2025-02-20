@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:story_app_initial/db/auth_repository.dart';
-import 'package:story_app_initial/model/story.dart';
-import 'package:story_app_initial/screen/login_screen.dart';
 import 'package:story_app_initial/screen/register_screen.dart';
-import 'package:story_app_initial/screen/splash_screen.dart';
 import 'package:story_app_initial/screen/stories_list_screen.dart';
 import 'package:story_app_initial/screen/story_detail_screen.dart';
+
+import '../model/story.dart';
+import '../db/auth_repository.dart';
+import '../screen/login_screen.dart';
+import '../screen/splash_screen.dart';
 
 class MyRouterDelegate extends RouterDelegate
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   final GlobalKey<NavigatorState> _navigatorKey;
   final AuthRepository authRepository;
-
-  String? selectedStory;
-
-  List<Page> historyStack = [];
-  bool? isLoggedIn;
-  bool isRegister = false;
 
   MyRouterDelegate(this.authRepository)
     : _navigatorKey = GlobalKey<NavigatorState>() {
@@ -31,6 +26,12 @@ class MyRouterDelegate extends RouterDelegate
   @override
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
+  String? selectedStory;
+
+  List<Page> historyStack = [];
+  bool? isLoggedIn;
+  bool isRegister = false;
+
   @override
   Widget build(BuildContext context) {
     if (isLoggedIn == null) {
@@ -40,13 +41,11 @@ class MyRouterDelegate extends RouterDelegate
     } else {
       historyStack = _loggedOutStack;
     }
-
     return Navigator(
       key: navigatorKey,
       pages: historyStack,
       onPopPage: (route, result) {
         final didPop = route.didPop(result);
-
         if (!didPop) {
           return false;
         }
@@ -66,7 +65,7 @@ class MyRouterDelegate extends RouterDelegate
   }
 
   List<Page> get _splashStack => const [
-    MaterialPage(key: ValueKey("SplashPage"), child: SplashScreen()),
+    MaterialPage(key: ValueKey("SplashScreen"), child: SplashScreen()),
   ];
 
   List<Page> get _loggedOutStack => [
@@ -108,6 +107,7 @@ class MyRouterDelegate extends RouterDelegate
           selectedStory = storyId;
           notifyListeners();
         },
+
         onLogout: () {
           isLoggedIn = false;
           notifyListeners();
