@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:story_app_initial/model/page_configuration.dart';
+import 'package:story_app_initial/data/model/page_configuration.dart';
 import 'package:story_app_initial/screen/register_screen.dart';
 import 'package:story_app_initial/screen/stories_list_screen.dart';
 import 'package:story_app_initial/screen/story_detail_screen.dart';
 
-import '../model/story.dart';
+import '../data/model/story.dart';
 import '../db/auth_repository.dart';
 import '../screen/login_screen.dart';
 import '../screen/splash_screen.dart';

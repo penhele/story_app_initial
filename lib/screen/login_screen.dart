@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:story_app_initial/model/user.dart';
+import 'package:story_app_initial/data/model/user.dart';
 import 'package:story_app_initial/provider/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {

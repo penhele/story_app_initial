@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:story_app_initial/model/user.dart';
+import 'package:story_app_initial/data/model/user.dart';
 
 class AuthRepository {
   final String stateKey = "state";

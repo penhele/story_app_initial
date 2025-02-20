@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/story.dart';
+import '../data/model/story.dart';
 
 class StoryDetailScreen extends StatelessWidget {
   final String storyId;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:story_app_initial/provider/auth_provider.dart';
 
-import '../model/story.dart';
+import '../data/model/story.dart';
 
 class StoriesListScreen extends StatelessWidget {
   final List<Story> stories;

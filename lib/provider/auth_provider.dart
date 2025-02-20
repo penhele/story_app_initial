@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:story_app_initial/db/auth_repository.dart';
-import 'package:story_app_initial/model/user.dart';
+import 'package:story_app_initial/data/model/user.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepository authRepository;
