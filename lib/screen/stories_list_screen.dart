@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import '../model/story.dart';
 
 class StoriesListScreen extends StatelessWidget {
-  final List<Story> quotes;
+  final List<Story> stories;
+  final Function(String) onTapped;
 
-  const StoriesListScreen({super.key, required this.quotes});
+  const StoriesListScreen({
+    super.key,
+    required this.stories,
+    required this.onTapped,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +18,12 @@ class StoriesListScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Stories App")),
       body: ListView(
         children: [
-          for (var quote in quotes)
+          for (var story in stories)
             ListTile(
-              title: Text(quote.author),
-              subtitle: Text(quote.quote),
+              title: Text(story.author),
+              subtitle: Text(story.story),
               isThreeLine: true,
+              onTap: () => onTapped(story.id),
             ),
         ],
       ),

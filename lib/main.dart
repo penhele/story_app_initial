@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:story_app_initial/screen/stories_list_screen.dart';
-
-import 'model/story.dart';
+import 'package:story_app_initial/routes/router_delegate.dart';
 
 void main() {
   runApp(const StoriesApp());
 }
 
-class StoriesApp extends StatelessWidget {
+class StoriesApp extends StatefulWidget {
   const StoriesApp({super.key});
+
+  @override
+  State<StoriesApp> createState() => _StoriesAppState();
+}
+
+class _StoriesAppState extends State<StoriesApp> {
+  late MyRouterDelegate myRouterDelegate;
+
+  String? selectedStory;
+
+  @override
+  void initState() {
+    super.initState();
+    myRouterDelegate = MyRouterDelegate();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Stories App',
-      home: StoriesListScreen(
-        quotes: quotes,
+      home: Router(
+        routerDelegate: myRouterDelegate,
+        backButtonDispatcher: RootBackButtonDispatcher(),
       ),
     );
   }

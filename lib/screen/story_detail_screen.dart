@@ -3,27 +3,22 @@ import 'package:flutter/material.dart';
 import '../model/story.dart';
 
 class StoryDetailScreen extends StatelessWidget {
-  final String quoteId;
+  final String storyId;
 
-  const StoryDetailScreen({
-    super.key,
-    required this.quoteId,
-  });
+  const StoryDetailScreen({super.key, required this.storyId});
 
   @override
   Widget build(BuildContext context) {
-    final quote = quotes.singleWhere((element) => element.id == quoteId);
+    final story = stories.singleWhere((element) => element.id == storyId);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(quote.author),
-      ),
+      appBar: AppBar(title: Text(story.author)),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(quote.author, style: Theme.of(context).textTheme.titleLarge),
-            Text(quote.quote, style: Theme.of(context).textTheme.titleMedium),
+            Text(story.author, style: Theme.of(context).textTheme.titleLarge),
+            Text(story.story, style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
       ),
