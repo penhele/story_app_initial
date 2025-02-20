@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:story_app_initial/model/page_configuration.dart';
 import 'package:story_app_initial/screen/register_screen.dart';
 import 'package:story_app_initial/screen/stories_list_screen.dart';
 import 'package:story_app_initial/screen/story_detail_screen.dart';
@@ -8,10 +9,12 @@ import '../db/auth_repository.dart';
 import '../screen/login_screen.dart';
 import '../screen/splash_screen.dart';
 
-class MyRouterDelegate extends RouterDelegate
+class MyRouterDelegate extends RouterDelegate<PageConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   final GlobalKey<NavigatorState> _navigatorKey;
   final AuthRepository authRepository;
+
+  bool? isUnknown;
 
   MyRouterDelegate(this.authRepository)
     : _navigatorKey = GlobalKey<NavigatorState>() {
@@ -60,8 +63,46 @@ class MyRouterDelegate extends RouterDelegate
   }
 
   @override
-  Future<void> setNewRoutePath(configuration) async {
-    /* Do Nothing */
+  PageConfiguration? get currentConfiguration {
+    if (isLoggedIn == null) {
+      return PageConfiguration.splash();
+    } else if (isRegister == true) {
+      return PageConfiguration.register();
+    } else if (isLoggedIn == false) {
+      return PageConfiguration.login();
+    } else if (isUnknown == true) {
+      return PageConfiguration.unknown();
+    } else if (selectedStory == null) {
+      return PageConfiguration.home();
+    } else if (selectedStory != null) {
+      return PageConfiguration.detailQuote(selectedStory!);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> setNewRoutePath(PageConfiguration configuration) async {
+    if (configuration.isUnknownPage) {
+      isUnknown = true;
+      isRegister = false;
+    } else if (configuration.isRegisterPage) {
+      isRegister = true;
+    } else if (configuration.isHomePage ||
+        configuration.isLoginPage ||
+        configuration.isSplashPage) {
+      isUnknown = false;
+      selectedStory = null;
+      isRegister = false;
+    } else if (configuration.isDetailPage) {
+      isUnknown = false;
+      isRegister = false;
+      selectedStory = configuration.storyId.toString();
+    } else {
+      print(' Could not set new route');
+    }
+
+    notifyListeners();
   }
 
   List<Page> get _splashStack => const [
