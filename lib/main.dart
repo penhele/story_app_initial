@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:story_app_initial/db/auth_repository.dart';
+import 'package:story_app_initial/provider/auth_provider.dart';
 import 'package:story_app_initial/routes/router_delegate.dart';
 
 void main() {
@@ -14,22 +17,30 @@ class StoriesApp extends StatefulWidget {
 
 class _StoriesAppState extends State<StoriesApp> {
   late MyRouterDelegate myRouterDelegate;
+  late AuthProvider authProvider;
 
   String? selectedStory;
 
   @override
   void initState() {
     super.initState();
-    myRouterDelegate = MyRouterDelegate();
+    final authRepository = AuthRepository();
+
+    authProvider = AuthProvider(authRepository);
+
+    myRouterDelegate = MyRouterDelegate(authRepository);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Stories App',
-      home: Router(
-        routerDelegate: myRouterDelegate,
-        backButtonDispatcher: RootBackButtonDispatcher(),
+    return ChangeNotifierProvider(
+      create: (context) => authProvider,
+      child: MaterialApp(
+        title: 'Stories App',
+        home: Router(
+          routerDelegate: myRouterDelegate,
+          backButtonDispatcher: RootBackButtonDispatcher(),
+        ),
       ),
     );
   }
