@@ -3,6 +3,7 @@ import 'package:story_app_initial/data/model/page_configuration.dart';
 import 'package:story_app_initial/screen/register_screen.dart';
 import 'package:story_app_initial/screen/stories_list_screen.dart';
 import 'package:story_app_initial/screen/story_detail_screen.dart';
+import 'package:story_app_initial/screen/unknown_screen.dart';
 
 import '../data/model/story.dart';
 import '../db/auth_repository.dart';
@@ -37,7 +38,9 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
 
   @override
   Widget build(BuildContext context) {
-    if (isLoggedIn == null) {
+    if (isUnknown == true) {
+      historyStack = _unknownStack;
+    } else if (isLoggedIn == null) {
       historyStack = _splashStack;
     } else if (isLoggedIn == true) {
       historyStack = _loggedInStack;
@@ -105,6 +108,10 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
     notifyListeners();
   }
 
+  List<Page> get _unknownStack => const [
+    MaterialPage(key: ValueKey("UnknownPage"), child: UnknownScreen()),
+  ];
+
   List<Page> get _splashStack => const [
     MaterialPage(key: ValueKey("SplashScreen"), child: SplashScreen()),
   ];
@@ -148,7 +155,6 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
           selectedStory = storyId;
           notifyListeners();
         },
-
         onLogout: () {
           isLoggedIn = false;
           notifyListeners();
