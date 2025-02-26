@@ -1,8 +1,8 @@
+import 'package:tes_auth/model/register_request.dart';
+
 import '../provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../model/user.dart';
 
 class RegisterScreen extends StatefulWidget {
   final Function() onRegister;
@@ -19,6 +19,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final nameController = TextEditingController();
+
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
@@ -27,6 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -47,6 +50,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                TextFormField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    hintText: "Name",
+                  ),
+                ),
                 TextFormField(
                   controller: emailController,
                   validator: (value) {
@@ -79,13 +88,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     : ElevatedButton(
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            final User user = User(
+                            final RegisterRequest registerRequest = RegisterRequest(
+                              name: nameController.text,
                               email: emailController.text,
                               password: passwordController.text,
                             );
                             final authRead = context.read<AuthProvider>();
 
-                            final result = await authRead.saveUser(user);
+                            final result = await authRead.userRegister(registerRequest);
                             if (result) widget.onRegister();
                           }
                         },

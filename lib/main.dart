@@ -1,3 +1,5 @@
+import 'package:tes_auth/service/auth_service.dart';
+
 import '../db/auth_repository.dart';
 import '../provider/auth_provider.dart';
 import '../routes/router_delegate.dart';
@@ -29,7 +31,7 @@ class _QuoteAppState extends State<QuoteApp> {
     super.initState();
     final authRepository = AuthRepository();
 
-    authProvider = AuthProvider(authRepository);
+    authProvider = AuthProvider(authRepository, AuthService());
 
     myRouterDelegate = MyRouterDelegate(authRepository);
 

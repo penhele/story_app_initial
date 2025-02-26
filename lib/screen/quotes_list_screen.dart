@@ -10,11 +10,11 @@ class QuotesListScreen extends StatelessWidget {
   final Function() onLogout;
 
   const QuotesListScreen({
-    Key? key,
+    super.key,
     required this.quotes,
     required this.onTapped,
     required this.onLogout,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

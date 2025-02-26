@@ -1,10 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../model/user.dart';
-
 class AuthRepository {
   final String stateKey = "state";
-  final String userKey = "user";
+  final String tokenKey = "token";
 
   Future<bool> isLoggedIn() async {
     final preferences = await SharedPreferences.getInstance();
@@ -24,28 +22,21 @@ class AuthRepository {
     return preferences.setBool(stateKey, false);
   }
 
-  Future<bool> saveUser(User user) async {
+  Future<bool> saveToken(String token) async {
     final preferences = await SharedPreferences.getInstance();
     await Future.delayed(const Duration(seconds: 2));
-    return preferences.setString(userKey, user.toJson());
+    return preferences.setString(tokenKey, token);
   }
 
-  Future<bool> deleteUser() async {
+  Future<bool> deleteToken() async {
     final preferences = await SharedPreferences.getInstance();
     await Future.delayed(const Duration(seconds: 2));
-    return preferences.setString(userKey, "");
+    return preferences.setString(tokenKey, "");
   }
 
-  Future<User?> getUser() async {
+  Future<String?> getToken() async {
     final preferences = await SharedPreferences.getInstance();
     await Future.delayed(const Duration(seconds: 2));
-    final json = preferences.getString(userKey) ?? "";
-    User? user;
-    try {
-      user = User.fromJson(json);
-    } catch (e) {
-      user = null;
-    }
-    return user;
+    return preferences.getString(tokenKey) ?? '';
   }
 }

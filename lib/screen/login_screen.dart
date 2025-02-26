@@ -1,4 +1,5 @@
-import '../model/user.dart';
+import 'package:tes_auth/model/login_request.dart';
+
 import '../provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -80,13 +81,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (formKey.currentState!.validate()) {
                             final scaffoldMessenger =
                                 ScaffoldMessenger.of(context);
-                            final User user = User(
+                            final LoginRequest loginRequest = LoginRequest(
                               email: emailController.text,
                               password: passwordController.text,
                             );
                             final authRead = context.read<AuthProvider>();
 
-                            final result = await authRead.login(user);
+                            final result = await authRead.login(loginRequest);
                             if (result) {
                               widget.onLogin();
                             } else {
