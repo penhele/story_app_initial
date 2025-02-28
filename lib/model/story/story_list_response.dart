@@ -1,4 +1,4 @@
-import '../model/story.dart';
+import 'story.dart';
 
 class StoryListResponse {
   bool error;

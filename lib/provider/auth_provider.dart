@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../api/api_service.dart';
-import '../model/register_request.dart';
-import '../model/register_response.dart';
+import '../model/auth/register_request.dart';
+import '../model/auth/register_response.dart';
 import '../db/auth_repository.dart';
-import '../model/login_request.dart';
-import '../model/login_response.dart';
+import '../model/auth/login_request.dart';
+import '../model/auth/login_response.dart';
 import '../service/auth_service.dart';
-import '../model/story.dart';
+import '../model/story/story.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepository authRepository;

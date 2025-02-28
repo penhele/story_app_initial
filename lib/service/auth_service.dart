@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../model/login_response.dart';
-import '../model/login_request.dart';
-import '../model/register_request.dart';
-import '../model/register_response.dart';
+import '../model/auth/login_response.dart';
+import '../model/auth/login_request.dart';
+import '../model/auth/register_request.dart';
+import '../model/auth/register_response.dart';
 
 class AuthService {
   static const String baseUrl = "https://story-api.dicoding.dev/v1";

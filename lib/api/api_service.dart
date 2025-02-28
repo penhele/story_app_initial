@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import '../model/story_detail_response.dart';
-import '../model/story_list_response.dart';
+import '../model/story/story_detail_response.dart';
+import '../model/story/story_list_response.dart';
 
 class ApiService {
   static const String _baseUrl = "https://story-api.dicoding.dev/v1";
