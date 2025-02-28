@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../model/story.dart';
@@ -72,13 +73,12 @@ class StoryListWidget extends StatelessWidget {
         placeholderBuilder: (context) => CircularProgressIndicator(),
       );
     } else {
-      return Image.network(
-        imageUrl,
+      return CachedNetworkImage(
+        imageUrl: imageUrl,
         width: 50,
         height: 50,
         fit: BoxFit.cover,
-        errorBuilder:
-            (context, error, stackTrace) => Icon(Icons.image_not_supported),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       );
     }
   }
