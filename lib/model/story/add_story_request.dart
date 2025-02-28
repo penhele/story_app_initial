@@ -1,12 +1,12 @@
 import 'dart:io';
 
-class Story {
+class AddStoryRequest {
   String description;
   File photo;
   double? lat;
   double? lon;
 
-  Story({
+  AddStoryRequest({
     required this.description,
     required this.photo,
     required this.lat,
