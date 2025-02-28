@@ -1,4 +1,6 @@
 import 'package:provider/provider.dart';
+import '../common/url_strategy.dart';
+import '../routes/route_information_parser.dart';
 import '../api/api_service.dart';
 import '../db/auth_repository.dart';
 import '../provider/auth_provider.dart';
@@ -10,6 +12,7 @@ import '../routes/router_delegate.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(const StoryApp());
 }
 
@@ -23,6 +26,7 @@ class StoryApp extends StatefulWidget {
 class _StoryAppState extends State<StoryApp> {
   late MyRouterDelegate myRouterDelegate;
   late AuthProvider authProvider;
+  late MyRouteInformationParser myRouteInformationParser;
 
   @override
   void initState() {
@@ -33,6 +37,8 @@ class _StoryAppState extends State<StoryApp> {
 
     authProvider = AuthProvider(authRepository, authService, apiService)
       ..loadToken();
+
+      myRouteInformationParser = MyRouteInformationParser();
 
     myRouterDelegate = MyRouterDelegate(authRepository);
   }
@@ -57,12 +63,11 @@ class _StoryAppState extends State<StoryApp> {
               ),
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Story App',
-        home: Router(
-          routerDelegate: myRouterDelegate,
-          backButtonDispatcher: RootBackButtonDispatcher(),
-        ),
+        routerDelegate: myRouterDelegate,
+        routeInformationParser: myRouteInformationParser,
+        backButtonDispatcher: RootBackButtonDispatcher(),
       ),
     );
   }
