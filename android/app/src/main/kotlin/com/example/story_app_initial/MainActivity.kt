@@ -1,4 +1,4 @@
-package com.example.tes_auth
+package com.example.story_app_initial
 
 import io.flutter.embedding.android.FlutterActivity
 
