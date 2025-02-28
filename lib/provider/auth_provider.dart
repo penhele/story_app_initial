@@ -63,22 +63,6 @@ class AuthProvider extends ChangeNotifier {
     return !isLoggedIn;
   }
 
-  /// **Logout pengguna**
-  // Future<bool> logout() async {
-  //   isLoadingLogout = true;
-  //   notifyListeners();
-
-  //   final logoutSuccess = await authRepository.logout();
-  //   if (logoutSuccess) {
-  //     _token = null;
-  //     isLoggedIn = false;
-  //   }
-
-  //   isLoadingLogout = false;
-  //   notifyListeners();
-  //   return !isLoggedIn;
-  // }
-
   Future<bool> register(RegisterRequest registerData) async {
     isLoadingRegister = true;
     notifyListeners();
@@ -96,23 +80,6 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> loadToken() async {
     _token = await authRepository.getToken();
-    notifyListeners();
-  }
-
-  Future<void> fetchStories() async {
-    if (_token == null) return;
-
-    isLoadingFetch = true;
-    notifyListeners();
-
-    try {
-      final response = await apiService.getStories(_token!);
-      _stories = response.stories;
-    } catch (e) {
-      print("Error fetching stories: $e");
-    }
-
-    isLoadingFetch = false;
     notifyListeners();
   }
 }

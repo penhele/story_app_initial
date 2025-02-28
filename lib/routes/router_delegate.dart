@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tes_auth/db/auth_repository.dart';
-
-import '../model/quote.dart';
-import '../screen/detail_screen.dart';
-import '../screen/home_screen.dart';
+import '../db/auth_repository.dart';
+import '../screen/detail/detail_screen.dart';
+import '../screen/home/home_screen.dart';
 import '../screen/login_screen.dart';
 import '../screen/register_screen.dart';
 import '../screen/splash_screen.dart';
@@ -26,7 +24,7 @@ class MyRouterDelegate extends RouterDelegate
   @override
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  String? selectedQuote;
+  String? selectedStory;
 
   List<Page> historyStack = [];
   bool? isLoggedIn;
@@ -36,16 +34,19 @@ class MyRouterDelegate extends RouterDelegate
     MaterialPage(key: ValueKey("SplashPage"), child: SplashScreen()),
   ];
   List<Page> get _loggedOutStack => [
-    MaterialPage(key: const ValueKey("LoginPage"), child: LoginScreen(
-      onLogin: () {
-        isLoggedIn = true;
-        notifyListeners();
-      },
-      onRegister: () {
-        isRegister = true;
-        notifyListeners();
-      },
-    )),
+    MaterialPage(
+      key: const ValueKey("LoginPage"),
+      child: LoginScreen(
+        onLogin: () {
+          isLoggedIn = true;
+          notifyListeners();
+        },
+        onRegister: () {
+          isRegister = true;
+          notifyListeners();
+        },
+      ),
+    ),
     if (isRegister == true)
       MaterialPage(
         key: const ValueKey("RegisterPage"),
@@ -65,9 +66,8 @@ class MyRouterDelegate extends RouterDelegate
     MaterialPage(
       key: const ValueKey("HomePage"),
       child: HomeScreen(
-        quotes: quotes,
-        onTapped: (String quoteId) {
-          selectedQuote = quoteId;
+        onTapped: (String storyId) {
+          selectedStory = storyId;
           notifyListeners();
         },
         onLogout: () {
@@ -76,10 +76,10 @@ class MyRouterDelegate extends RouterDelegate
         },
       ),
     ),
-    if (selectedQuote != null)
+    if (selectedStory != null)
       MaterialPage(
-        key: ValueKey(selectedQuote),
-        child: DetailScreen(quoteId: selectedQuote!),
+        key: ValueKey(selectedStory),
+        child: DetailScreen(storyId: selectedStory!),
       ),
   ];
 
@@ -102,7 +102,7 @@ class MyRouterDelegate extends RouterDelegate
         }
 
         isRegister = false;
-        selectedQuote = null;
+        selectedStory = null;
         notifyListeners();
 
         return true;

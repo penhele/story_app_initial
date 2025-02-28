@@ -1,8 +1,10 @@
 import 'package:provider/provider.dart';
-import 'package:tes_auth/api/api_service.dart';
-import 'package:tes_auth/db/auth_repository.dart';
-import 'package:tes_auth/provider/auth_provider.dart';
-import 'package:tes_auth/service/auth_service.dart';
+import '../api/api_service.dart';
+import '../db/auth_repository.dart';
+import '../provider/auth_provider.dart';
+import '../provider/story_detail_provider.dart';
+import '../provider/story_list_provider.dart';
+import '../service/auth_service.dart';
 
 import '../routes/router_delegate.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,23 @@ class _StoryAppState extends State<StoryApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => authProvider)],
+      providers: [
+        ChangeNotifierProvider(create: (context) => authProvider),
+        ChangeNotifierProvider(
+          create:
+              (context) => StoryListProvider(
+                ApiService(),
+                Provider.of<AuthProvider>(context, listen: false),
+              ),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (context) => StoryDetailProvider(
+                ApiService(),
+                Provider.of<AuthProvider>(context, listen: false),
+              ),
+        ),
+      ],
       child: MaterialApp(
         title: 'Story App',
         home: Router(
