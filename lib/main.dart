@@ -1,3 +1,9 @@
+import 'package:provider/provider.dart';
+import 'package:tes_auth/api/api_service.dart';
+import 'package:tes_auth/db/auth_repository.dart';
+import 'package:tes_auth/provider/auth_provider.dart';
+import 'package:tes_auth/service/auth_service.dart';
+
 import '../routes/router_delegate.dart';
 import 'package:flutter/material.dart';
 
@@ -14,23 +20,31 @@ class StoryApp extends StatefulWidget {
 
 class _StoryAppState extends State<StoryApp> {
   late MyRouterDelegate myRouterDelegate;
+  late AuthProvider authProvider;
 
   @override
   void initState() {
     super.initState();
-    myRouterDelegate = MyRouterDelegate();
+    final authRepository = AuthRepository();
+    final authService = AuthService();
+    final apiService = ApiService();
+
+    authProvider = AuthProvider(authRepository, authService, apiService)
+      ..loadToken();
+
+    myRouterDelegate = MyRouterDelegate(authRepository);
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      title: 'Story App',
-
-      home: Router(
-        routerDelegate: myRouterDelegate,
-
-        backButtonDispatcher: RootBackButtonDispatcher(),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => authProvider)],
+      child: MaterialApp(
+        title: 'Story App',
+        home: Router(
+          routerDelegate: myRouterDelegate,
+          backButtonDispatcher: RootBackButtonDispatcher(),
+        ),
       ),
     );
   }
