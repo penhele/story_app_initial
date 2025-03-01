@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:story_app_initial/provider/home_provider.dart';
 import '../common/url_strategy.dart';
 import '../routes/route_information_parser.dart';
 import '../api/api_service.dart';
@@ -62,6 +63,11 @@ class _StoryAppState extends State<StoryApp> {
                 Provider.of<AuthProvider>(context, listen: false),
               ),
         ),
+
+        // home provider
+        ChangeNotifierProvider(
+          create: (context) => HomeProvider(),
+        )
       ],
       child: MaterialApp.router(
         title: 'Story App',
