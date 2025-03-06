@@ -34,9 +34,8 @@ class _StoryAppState extends State<StoryApp> {
     super.initState();
     final authRepository = AuthRepository();
     final authService = AuthService();
-    final apiService = ApiService();
 
-    authProvider = AuthProvider(authRepository, authService, apiService)
+    authProvider = AuthProvider(authRepository, authService)
       ..loadToken();
 
       myRouteInformationParser = MyRouteInformationParser();

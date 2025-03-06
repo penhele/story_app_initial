@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../api/api_service.dart';
 import '../model/auth/register_request.dart';
 import '../model/auth/register_response.dart';
 import '../db/auth_repository.dart';
@@ -11,9 +10,8 @@ import '../model/story/story.dart';
 class AuthProvider extends ChangeNotifier {
   final AuthRepository authRepository;
   final AuthService authService;
-  final ApiService apiService;
 
-  AuthProvider(this.authRepository, this.authService, this.apiService);
+  AuthProvider(this.authRepository, this.authService);
 
   bool isLoadingLogin = false;
   bool isLoadingLogout = false;

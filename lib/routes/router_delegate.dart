@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:story_app_initial/screen/upload/add_story_screen.dart';
 import '../db/auth_repository.dart';
 import '../model/page_configuration.dart';
 import '../screen/detail/detail_screen.dart';
@@ -30,8 +31,10 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
   List<Page> historyStack = [];
   bool? isLoggedIn;
   bool isRegister = false;
-
   bool? isUnknown;
+
+  bool isAddingStory = false;
+  bool isGoToHome = false;
 
   List<Page> get _splashStack => const [
     MaterialPage(key: ValueKey("SplashPage"), child: SplashScreen()),
@@ -77,12 +80,27 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
           isLoggedIn = false;
           notifyListeners();
         },
+        toAddStoryScreen: () {
+          isAddingStory = true;
+          notifyListeners();
+        },
       ),
     ),
     if (selectedStory != null)
       MaterialPage(
         key: ValueKey(selectedStory),
         child: DetailScreen(storyId: selectedStory!),
+      ),
+    if (isAddingStory)
+      MaterialPage(
+        key: const ValueKey("AddStoryPage"),
+        child: AddStoryScreen(
+          toHomeScreen: () {
+            isGoToHome = true;
+            isAddingStory = false;
+            notifyListeners();
+          },
+        ),
       ),
   ];
 
@@ -102,6 +120,14 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
         final didPop = route.didPop(result);
         if (!didPop) {
           return false;
+        }
+
+        if (isAddingStory) {
+          isAddingStory = false;
+        }
+
+        if (isGoToHome) {
+          isGoToHome = false;
         }
 
         isRegister = false;

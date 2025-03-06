@@ -8,13 +8,18 @@ import '../../screen/home/story_list_widget.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/story_list_provider.dart';
 import '../../static/story_list_result_state.dart';
-import '../upload/add_story_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final Function(String) onTapped;
   final Function() onLogout;
+  final Function() toAddStoryScreen;
 
-  const HomeScreen({super.key, required this.onTapped, required this.onLogout});
+  const HomeScreen({
+    super.key,
+    required this.onTapped,
+    required this.onLogout,
+    required this.toAddStoryScreen,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -105,10 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
       provider.setImageFile(pickedFile);
       provider.setImagePath(pickedFile.path);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AddStoryScreen()),
-      );
+      widget.toAddStoryScreen();
     }
   }
 
@@ -130,10 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
       provider.setImageFile(pickedFile);
       provider.setImagePath(pickedFile.path);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AddStoryScreen()),
-      );
+      widget.toAddStoryScreen();
     }
   }
 }
