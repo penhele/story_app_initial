@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:story_app_initial/provider/add_story_provider.dart';
 import 'package:story_app_initial/provider/home_provider.dart';
 import '../common/url_strategy.dart';
 import '../routes/route_information_parser.dart';
@@ -35,10 +36,9 @@ class _StoryAppState extends State<StoryApp> {
     final authRepository = AuthRepository();
     final authService = AuthService();
 
-    authProvider = AuthProvider(authRepository, authService)
-      ..loadToken();
+    authProvider = AuthProvider(authRepository, authService)..loadToken();
 
-      myRouteInformationParser = MyRouteInformationParser();
+    myRouteInformationParser = MyRouteInformationParser();
 
     myRouterDelegate = MyRouterDelegate(authRepository);
   }
@@ -64,9 +64,12 @@ class _StoryAppState extends State<StoryApp> {
         ),
 
         // home provider
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
+
+        // add story provider
         ChangeNotifierProvider(
-          create: (context) => HomeProvider(),
-        )
+          create: (context) => AddStoryProvider(ApiService(), AuthRepository()),
+        ),
       ],
       child: MaterialApp.router(
         title: 'Story App',

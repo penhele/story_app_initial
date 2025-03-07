@@ -1,8 +1,8 @@
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class AddStoryRequest {
   String description;
-  File photo;
+  XFile photo;
   double? lat;
   double? lon;
 
