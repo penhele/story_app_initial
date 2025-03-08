@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:story_app_initial/screen/upload/add_story_screen.dart';
+import '../screen/upload/add_story_screen.dart';
 import '../db/auth_repository.dart';
 import '../model/page_configuration.dart';
 import '../screen/detail/detail_screen.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../api/api_service.dart';
-import '../static/story_detail_result_state.dart';
 import 'auth_provider.dart';
+import '../static/story_detail_result_state.dart';
+import '../api/api_service.dart';
 
 class StoryDetailProvider extends ChangeNotifier {
   final ApiService _apiService;

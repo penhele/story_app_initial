@@ -4,7 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:story_app_initial/screen/home/home_error_state_widget.dart';
+import '../../screen/home/home_error_state_widget.dart';
 import '../../provider/home_provider.dart';
 import '../../screen/home/story_list_widget.dart';
 import '../../provider/auth_provider.dart';
@@ -80,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             StoryListErrorState(error: var message) => Center(
-              child: HomeErrorState(errorMessage: message, onRetry: _fetchStoryList),
+              child: HomeErrorState(
+                errorMessage: message,
+                onRetry: _fetchStoryList,
+              ),
             ),
             _ => const Center(child: Text('Memuat data...')),
           };

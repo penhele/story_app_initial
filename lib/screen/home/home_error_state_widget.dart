@@ -18,23 +18,14 @@ class HomeErrorState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.error_outline_sharp,
-              size: 80,
-            ),
+            Icon(Icons.error_outline_sharp, size: 80),
             const SizedBox(height: 16),
             Text('Failed to load data'),
             Text('Check your connection!'),
             const SizedBox(height: 8),
-            Text(
-              errorMessage,
-              textAlign: TextAlign.center,
-            ),
+            Text(errorMessage, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: onRetry,
-              child: const Text('Retry'),
-            ),
+            ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
           ],
         ),
       ),

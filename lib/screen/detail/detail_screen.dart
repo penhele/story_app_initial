@@ -42,7 +42,7 @@ class _DetailScreenState extends State<DetailScreen> {
             StoryDetailLoadingState() => Center(
               child: LoadingAnimationWidget.waveDots(
                 color: Colors.blue,
-                size: 50
+                size: 50,
               ),
             ),
             StoryDetailLoadedState(data: var story) => BodyOfDetailWidget(

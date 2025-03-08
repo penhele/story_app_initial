@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:story_app_initial/model/story/add_story_request.dart';
-import 'package:story_app_initial/model/story/add_story_response.dart';
+import '../model/story/add_story_request.dart';
+import '../model/story/add_story_response.dart';
 import '../model/story/story_detail_response.dart';
 import '../model/story/story_list_response.dart';
 
@@ -37,12 +37,16 @@ class ApiService {
     }
   }
 
-  Future<AddStoryResponse> addStory(AddStoryRequest addStoryData, String token) async {
+  Future<AddStoryResponse> addStory(
+    AddStoryRequest addStoryData,
+    String token,
+  ) async {
     var uri = Uri.parse("$_baseUrl/stories");
 
-    var request = http.MultipartRequest("POST", uri)
-      ..headers["Authorization"] = "Bearer $token"
-      ..fields["description"] = addStoryData.description;
+    var request =
+        http.MultipartRequest("POST", uri)
+          ..headers["Authorization"] = "Bearer $token"
+          ..fields["description"] = addStoryData.description;
 
     if (addStoryData.lat != null) {
       request.fields["lat"] = addStoryData.lat.toString();
@@ -53,19 +57,21 @@ class ApiService {
 
     String? mimeType = lookupMimeType(addStoryData.photo.path) ?? 'image/jpeg';
 
-    request.files.add(await http.MultipartFile.fromPath(
-      "photo",
-      addStoryData.photo.path,
-      contentType: MediaType.parse(mimeType),
-    ));
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        "photo",
+        addStoryData.photo.path,
+        contentType: MediaType.parse(mimeType),
+      ),
+    );
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
 
-  if (response.statusCode == 201) {
-    return AddStoryResponse.fromJson(jsonDecode(response.body)); 
-  } else {
-    throw Exception("Failed to add story: ${response.body}");
-  }
+    if (response.statusCode == 201) {
+      return AddStoryResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception("Failed to add story: ${response.body}");
+    }
   }
 }

@@ -10,7 +10,6 @@ import '../provider/auth_provider.dart';
 import '../provider/story_detail_provider.dart';
 import '../provider/story_list_provider.dart';
 import '../service/auth_service.dart';
-
 import '../routes/router_delegate.dart';
 
 void main() {

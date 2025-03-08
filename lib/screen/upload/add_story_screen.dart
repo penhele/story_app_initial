@@ -4,10 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:story_app_initial/provider/story_list_provider.dart';
+import '../../provider/story_list_provider.dart';
 import '../../model/story/add_story_request.dart';
 import '../../provider/add_story_provider.dart';
-
 import '../../provider/home_provider.dart';
 
 class AddStoryScreen extends StatefulWidget {

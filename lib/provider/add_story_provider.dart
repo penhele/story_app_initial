@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:story_app_initial/api/api_service.dart';
-import 'package:story_app_initial/db/auth_repository.dart';
-import 'package:story_app_initial/model/story/add_story_request.dart';
-import 'package:story_app_initial/model/story/add_story_response.dart';
+import '../api/api_service.dart';
+import '../db/auth_repository.dart';
+import '../model/story/add_story_request.dart';
+import '../model/story/add_story_response.dart';
 
 class AddStoryProvider extends ChangeNotifier {
   final ApiService apiService;
@@ -20,14 +20,16 @@ class AddStoryProvider extends ChangeNotifier {
   bool _isPosted = false;
   bool get isPosted => _isPosted;
 
-
   Future<bool> addStory(AddStoryRequest addStoryData) async {
     isAddStoryLoading = true;
     notifyListeners();
 
     try {
       _token = await authRepository.getToken();
-      AddStoryResponse response = await apiService.addStory(addStoryData, _token!);
+      AddStoryResponse response = await apiService.addStory(
+        addStoryData,
+        _token!,
+      );
 
       _isPosted = !response.error;
       notifyListeners();
