@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:story_app_initial/provider/story_list_provider.dart';
 import '../../model/story/add_story_request.dart';
 import '../../provider/add_story_provider.dart';
 
@@ -23,59 +24,99 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final homeProvider = context.watch<HomeProvider>();
+    final addStoryProvider = context.watch<AddStoryProvider>();
+
     return Scaffold(
-      appBar: AppBar(title: Text('Add Story'), centerTitle: true),
+      appBar: AppBar(title: const Text('Add Story'), centerTitle: true),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              context.watch<HomeProvider>().imagePath == null
+              homeProvider.imagePath == null
                   ? const Align(
                     alignment: Alignment.center,
                     child: Icon(Icons.image, size: 100),
                   )
                   : _showImage(context),
 
-              SizedBox.square(dimension: 16.0),
+              const SizedBox(height: 16.0),
 
               TextFormField(
                 controller: descriptionController,
                 decoration: const InputDecoration(hintText: 'Description'),
               ),
 
-              SizedBox.square(dimension: 16.0),
+              const SizedBox(height: 16.0),
 
-              context.watch<AddStoryProvider>().isAddStoryLoading
+              addStoryProvider.isAddStoryLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ElevatedButton(
                     onPressed: () async {
                       final scaffoldMessenger = ScaffoldMessenger.of(context);
-                      final XFile? imageFile = context.read<HomeProvider>().imageFile;
+                      final XFile? imageFile = homeProvider.imageFile;
+
+                      if (imageFile == null) {
+                        scaffoldMessenger.showSnackBar(
+                          const SnackBar(
+                            content: Text('Pilih gambar terlebih dahulu!'),
+                          ),
+                        );
+                        return;
+                      }
+
+                      // Cek ukuran file
+                      File file = File(imageFile.path);
+                      int fileSize = await file.length();
+                      if (fileSize > 1024 * 1024) {
+                        scaffoldMessenger.showSnackBar(
+                          const SnackBar(
+                            content: Text('File terlalu besar! Maksimum 1MB.'),
+                          ),
+                        );
+                        return;
+                      }
+
+                      if (descriptionController.text.trim().isEmpty) {
+                        scaffoldMessenger.showSnackBar(
+                          const SnackBar(
+                            content: Text('Deskripsi tidak boleh kosong!'),
+                          ),
+                        );
+                        return;
+                      }
 
                       final AddStoryRequest addStory = AddStoryRequest(
                         description: descriptionController.text,
-                        photo: imageFile!,
+                        photo: imageFile,
                         lat: null,
                         lon: null,
                       );
 
-                      final addStoryRead = context.read<AddStoryProvider>();
+                      try {
+                        final result = await context
+                            .read<AddStoryProvider>()
+                            .addStory(addStory);
 
-                      final result = await addStoryRead.addStory(addStory);
-
-                      if (result) {
-                        widget.toHomeScreen();
-                      } else {
+                        if (result) {
+                          context.read<StoryListProvider>().fetchStoryList();
+                          widget.toHomeScreen();
+                        } else {
+                          scaffoldMessenger.showSnackBar(
+                            const SnackBar(content: Text('Upload gagal!')),
+                          );
+                        }
+                      } catch (e) {
                         scaffoldMessenger.showSnackBar(
-                          const SnackBar(content: Text('upload gagal'))
+                          SnackBar(content: Text('Terjadi kesalahan: $e')),
                         );
                       }
                     },
                     child: const Text('Upload'),
                   ),
 
-                  SizedBox.square(dimension: 16.0),
+              const SizedBox(height: 16.0),
             ],
           ),
         ),

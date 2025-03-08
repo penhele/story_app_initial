@@ -50,8 +50,8 @@ class BodyOfDetailWidget extends StatelessWidget {
         progressIndicatorBuilder:
             (context, url, progress) =>
                 CircularProgressIndicator(value: progress.progress),
-        width: 150,
-        height: 150,
+        // width: 150,
+        // height: 150,
         fit: BoxFit.cover,
         errorWidget: (context, url, error) => const Icon(Icons.error),
       );

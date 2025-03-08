@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-            StoryListErrorState() => const Center(child: Text('error bos')),
+            StoryListErrorState() => const Center(child: Text('Terjadi error')),
             _ => const Center(child: Text('tidak ada data bos')),
           };
         },

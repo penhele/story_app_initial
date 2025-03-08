@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:story_app_initial/api/api_service.dart';
 import 'package:story_app_initial/db/auth_repository.dart';
@@ -27,15 +29,15 @@ class AddStoryProvider extends ChangeNotifier {
       _token = await authRepository.getToken();
       AddStoryResponse response = await apiService.addStory(addStoryData, _token!);
 
-      _isPosted = (response.error == false) ? true : false;
+      _isPosted = !response.error;
       notifyListeners();
     } catch (e) {
+      log("Error saat menambahkan story: $e");
       _isPosted = false;
+    } finally {
       isAddStoryLoading = false;
+      notifyListeners();
     }
-
-    isAddStoryLoading = false;
-    notifyListeners();
 
     return _isPosted;
   }

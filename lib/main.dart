@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
-import 'package:story_app_initial/provider/add_story_provider.dart';
-import 'package:story_app_initial/provider/home_provider.dart';
+import 'package:flutter/material.dart';
+import '../provider/add_story_provider.dart';
+import '../provider/home_provider.dart';
 import '../common/url_strategy.dart';
 import '../routes/route_information_parser.dart';
 import '../api/api_service.dart';
@@ -11,7 +12,6 @@ import '../provider/story_list_provider.dart';
 import '../service/auth_service.dart';
 
 import '../routes/router_delegate.dart';
-import 'package:flutter/material.dart';
 
 void main() {
   usePathUrlStrategy();
