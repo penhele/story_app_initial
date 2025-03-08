@@ -13,44 +13,57 @@ class StoryListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
         child: Row(
           children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxHeight: 60,
-                minHeight: 60,
-                maxWidth: 80,
-                minWidth: 80,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Hero(
-                  tag: story.photoUrl,
-                  child: _buildImage(story.photoUrl),
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Hero(
+                tag: story.photoUrl,
+                child: _buildImage(story.photoUrl),
               ),
             ),
-            const SizedBox.square(dimension: 8),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     story.name,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
                   ),
-                  const SizedBox.square(dimension: 6),
+                  const SizedBox(height: 4),
                   Text(
                     story.description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 1,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(color: Colors.black54),
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: Colors.black54,
             ),
           ],
         ),
@@ -59,21 +72,31 @@ class StoryListWidget extends StatelessWidget {
   }
 
   Widget _buildImage(String imageUrl) {
-    if (imageUrl.endsWith('.svg')) {
-      return SvgPicture.network(
-        imageUrl,
-        width: 50,
-        height: 50,
-        placeholderBuilder: (context) => CircularProgressIndicator(),
-      );
-    } else {
-      return CachedNetworkImage(
-        imageUrl: imageUrl,
-        width: 50,
-        height: 50,
-        fit: BoxFit.cover,
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-      );
-    }
+    return imageUrl.endsWith('.svg')
+        ? SvgPicture.network(
+          imageUrl,
+          width: 80,
+          height: 80,
+          placeholderBuilder: (context) => CircularProgressIndicator(),
+        )
+        : CachedNetworkImage(
+          imageUrl: imageUrl,
+          width: 80,
+          height: 80,
+          fit: BoxFit.cover,
+          placeholder:
+              (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+          errorWidget:
+              (context, url, error) => Container(
+                width: 80,
+                height: 80,
+                color: Colors.grey[300],
+                child: const Icon(
+                  Icons.image_not_supported,
+                  color: Colors.black45,
+                ),
+              ),
+        );
   }
 }

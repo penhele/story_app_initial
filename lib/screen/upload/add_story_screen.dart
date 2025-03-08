@@ -44,75 +44,39 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
 
               TextFormField(
                 controller: descriptionController,
-                decoration: const InputDecoration(hintText: 'Description'),
+                decoration: InputDecoration(
+                  hintText: 'Masukkan Deskripsi',
+                  labelText: 'Deskripsi',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                maxLines: 3,
               ),
 
               const SizedBox(height: 16.0),
 
               addStoryProvider.isAddStoryLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : ElevatedButton(
-                    onPressed: () async {
-                      final scaffoldMessenger = ScaffoldMessenger.of(context);
-                      final XFile? imageFile = homeProvider.imageFile;
-
-                      if (imageFile == null) {
-                        scaffoldMessenger.showSnackBar(
-                          const SnackBar(
-                            content: Text('Pilih gambar terlebih dahulu!'),
-                          ),
-                        );
-                        return;
-                      }
-
-                      // Cek ukuran file
-                      File file = File(imageFile.path);
-                      int fileSize = await file.length();
-                      if (fileSize > 1024 * 1024) {
-                        scaffoldMessenger.showSnackBar(
-                          const SnackBar(
-                            content: Text('File terlalu besar! Maksimum 1MB.'),
-                          ),
-                        );
-                        return;
-                      }
-
-                      if (descriptionController.text.trim().isEmpty) {
-                        scaffoldMessenger.showSnackBar(
-                          const SnackBar(
-                            content: Text('Deskripsi tidak boleh kosong!'),
-                          ),
-                        );
-                        return;
-                      }
-
-                      final AddStoryRequest addStory = AddStoryRequest(
-                        description: descriptionController.text,
-                        photo: imageFile,
-                        lat: null,
-                        lon: null,
-                      );
-
-                      try {
-                        final result = await context
-                            .read<AddStoryProvider>()
-                            .addStory(addStory);
-
-                        if (result) {
-                          context.read<StoryListProvider>().fetchStoryList();
-                          widget.toHomeScreen();
-                        } else {
-                          scaffoldMessenger.showSnackBar(
-                            const SnackBar(content: Text('Upload gagal!')),
-                          );
-                        }
-                      } catch (e) {
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(content: Text('Terjadi kesalahan: $e')),
-                        );
-                      }
-                    },
-                    child: const Text('Upload'),
+                  ? const CircularProgressIndicator()
+                  : SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton.icon(
+                      onPressed: () async => await _uploadStory(context),
+                      icon: const Icon(Icons.cloud_upload, color: Colors.white),
+                      label: Text(
+                        'Upload',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff4F959D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
                   ),
 
               const SizedBox(height: 16.0),
@@ -143,6 +107,66 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
                   ),
         ),
       ],
+    );
+  }
+
+  Future<void> _uploadStory(BuildContext context) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final homeProvider = context.read<HomeProvider>();
+    final addStoryProvider = context.read<AddStoryProvider>();
+
+    final XFile? imageFile = homeProvider.imageFile;
+    if (imageFile == null) {
+      scaffoldMessenger.showSnackBar(
+        _buildSnackBar('Pilih gambar terlebih dahulu!', Colors.red),
+      );
+      return;
+    }
+
+    File file = File(imageFile.path);
+    int fileSize = await file.length();
+    if (fileSize > 1024 * 1024) {
+      scaffoldMessenger.showSnackBar(
+        _buildSnackBar('File terlalu besar! Maksimum 1MB.', Colors.orange),
+      );
+      return;
+    }
+
+    if (descriptionController.text.trim().isEmpty) {
+      scaffoldMessenger.showSnackBar(
+        _buildSnackBar('Deskripsi tidak boleh kosong!', Colors.red),
+      );
+      return;
+    }
+
+    final AddStoryRequest addStory = AddStoryRequest(
+      description: descriptionController.text,
+      photo: imageFile,
+      lat: null,
+      lon: null,
+    );
+
+    try {
+      final result = await addStoryProvider.addStory(addStory);
+      if (result) {
+        context.read<StoryListProvider>().fetchStoryList();
+        widget.toHomeScreen();
+      } else {
+        scaffoldMessenger.showSnackBar(
+          _buildSnackBar('Upload gagal!', Colors.red),
+        );
+      }
+    } catch (e) {
+      scaffoldMessenger.showSnackBar(
+        _buildSnackBar('Terjadi kesalahan: $e', Colors.red),
+      );
+    }
+  }
+
+  SnackBar _buildSnackBar(String message, Color color) {
+    return SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      backgroundColor: color,
     );
   }
 }

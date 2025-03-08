@@ -12,14 +12,12 @@ class AuthRepository {
 
   Future<bool> login(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    await Future.delayed(const Duration(seconds: 2));
     await prefs.setString(tokenKey, token);
     return prefs.setBool(stateKey, true);
   }
 
   Future<bool> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await Future.delayed(const Duration(seconds: 2));
     await prefs.remove(tokenKey);
     return prefs.setBool(stateKey, false);
   }
