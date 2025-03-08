@@ -56,7 +56,7 @@ class BodyOfDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Deskripsi  - - - ',
+                  'Description  - - - ',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontStyle: FontStyle.italic,
                     color: Colors.black,

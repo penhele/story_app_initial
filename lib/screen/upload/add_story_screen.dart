@@ -45,8 +45,8 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
               TextFormField(
                 controller: descriptionController,
                 decoration: InputDecoration(
-                  hintText: 'Masukkan Deskripsi',
-                  labelText: 'Deskripsi',
+                  hintText: 'Input description',
+                  labelText: 'Description',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

@@ -75,7 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 16),
 
-                // Password Field
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
@@ -96,7 +95,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 24),
 
-                // Login Button
                 context.watch<AuthProvider>().isLoadingLogin
                     ? const Center(child: CircularProgressIndicator())
                     : SizedBox(
@@ -145,7 +143,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 12),
 
-                // Register Button
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
