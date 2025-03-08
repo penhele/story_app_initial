@@ -55,12 +55,6 @@ class StoryListWidget extends StatelessWidget {
           ],
         ),
       ),
-
-      // child: ListTile(
-      //   leading: _buildImage(story.photoUrl),
-      //   title: Text(story.name),
-      //   subtitle: Text(story.description),
-      // ),
     );
   }
 

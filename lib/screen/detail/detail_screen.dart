@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../screen/detail/detail_error_state_widget.dart';
 import '../../screen/detail/body_of_detail_widget.dart';
 import '../../provider/story_detail_provider.dart';
 import '../../static/story_detail_result_state.dart';
@@ -14,10 +16,7 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  @override
-  void initState() {
-    super.initState();
-
+  void _fetchStoryDetail() {
     Future.microtask(() {
       Provider.of<StoryDetailProvider>(
         context,
@@ -27,20 +26,33 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _fetchStoryDetail();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Story Detail"), centerTitle: true),
       body: Consumer<StoryDetailProvider>(
         builder: (context, value, child) {
           return switch (value.resultState) {
-            StoryDetailLoadingState() => const Center(
-              child: CircularProgressIndicator(),
+            StoryDetailLoadingState() => Center(
+              child: LoadingAnimationWidget.waveDots(
+                color: Colors.blue,
+                size: 50
+              ),
             ),
             StoryDetailLoadedState(data: var story) => BodyOfDetailWidget(
               story: story,
             ),
-            StoryDetailErrorState(error: var message) => Text(message),
-            _ => const SizedBox(),
+            StoryDetailErrorState(error: var message) => DetailErrorState(
+              errorMessage: message,
+              onRetry: _fetchStoryDetail,
+            ),
+            _ => const Center(child: Text('Memuat data...')),
           };
         },
       ),

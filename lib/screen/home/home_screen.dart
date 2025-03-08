@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:story_app_initial/provider/home_provider.dart';
+import 'package:story_app_initial/screen/home/home_error_state_widget.dart';
+import '../../provider/home_provider.dart';
 import '../../screen/home/story_list_widget.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/story_list_provider.dart';
@@ -26,13 +28,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void _fetchStoryList() {
+    Future.microtask(() {
+      Provider.of<StoryListProvider>(context, listen: false).fetchStoryList();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
-    Future.microtask(() {
-      Provider.of<StoryListProvider>(context, listen: false).fetchStoryList();
-    });
+    _fetchStoryList();
   }
 
   @override
@@ -56,8 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Consumer<StoryListProvider>(
         builder: (context, value, child) {
           return switch (value.resultState) {
-            StoryListLoadingState() => const Center(
-              child: CircularProgressIndicator(),
+            StoryListLoadingState() => Center(
+              child: LoadingAnimationWidget.waveDots(
+                color: Colors.blue,
+                size: 50,
+              ),
             ),
             StoryListLoadedState(data: var storyList) => ListView.builder(
               itemCount: storyList.length,
@@ -70,8 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-            StoryListErrorState() => const Center(child: Text('Terjadi error')),
-            _ => const Center(child: Text('tidak ada data bos')),
+            StoryListErrorState(error: var message) => Center(
+              child: HomeErrorState(errorMessage: message, onRetry: _fetchStoryList),
+            ),
+            _ => const Center(child: Text('Memuat data...')),
           };
         },
       ),
