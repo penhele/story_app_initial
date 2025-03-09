@@ -113,6 +113,7 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
     } else {
       historyStack = _loggedOutStack;
     }
+
     return Navigator(
       key: navigatorKey,
       pages: historyStack,
@@ -152,12 +153,14 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
       isUnknown = false;
       selectedStory = null;
       isRegister = false;
+      isAddingStory = false;
     } else if (configuration.isDetailPage) {
       isUnknown = false;
       isRegister = false;
       selectedStory = configuration.storyId.toString();
+    } else if (configuration.isAddStoryPage) {
+      isAddingStory = true;
     } else {
-      print(' Could not set new route');
     }
     notifyListeners();
   }
@@ -172,10 +175,12 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
       return PageConfiguration.login();
     } else if (isUnknown == true) {
       return PageConfiguration.unknown();
-    } else if (selectedStory == null) {
+    } else if (selectedStory == null && !isAddingStory) {
       return PageConfiguration.home();
     } else if (selectedStory != null) {
       return PageConfiguration.detailStory(selectedStory!);
+    } else if (isAddingStory == true) {
+      return PageConfiguration.addStory();
     } else {
       return null;
     }

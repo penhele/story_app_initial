@@ -23,6 +23,8 @@ class MyRouteInformationParser
         return PageConfiguration.register();
       } else if (first == 'splash') {
         return PageConfiguration.splash();
+      } else if (first == 'add-story') {
+        return PageConfiguration.addStory();
       } else {
         return PageConfiguration.unknown();
       }
@@ -30,8 +32,7 @@ class MyRouteInformationParser
       // path parameter => "/aaa/bbb"
       final first = uri.pathSegments[0].toLowerCase();
       final second = uri.pathSegments[1].toLowerCase();
-      final storyId = int.tryParse(second) ?? 0;
-      if (first == 'story' && (storyId >= 1 && storyId <= 5)) {
+      if (first == 'story') {
         return PageConfiguration.detailStory(second);
       } else {
         return PageConfiguration.unknown();
@@ -53,6 +54,8 @@ class MyRouteInformationParser
       return const RouteInformation(location: '/login');
     } else if (configuration.isHomePage) {
       return const RouteInformation(location: '/');
+    } else if (configuration.isAddStoryPage) {
+      return const RouteInformation(location: '/add-story');
     } else if (configuration.isDetailPage) {
       return RouteInformation(location: '/story/${configuration.storyId}');
     } else {
