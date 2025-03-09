@@ -26,7 +26,10 @@ class HomeErrorState extends StatelessWidget {
             const SizedBox(height: 8),
             Text(errorMessage, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            ElevatedButton(onPressed: onRetry, child: Text(AppLocalizations.of(context)!.retry)),
+            ElevatedButton(
+              onPressed: onRetry,
+              child: Text(AppLocalizations.of(context)!.retry),
+            ),
           ],
         ),
       ),

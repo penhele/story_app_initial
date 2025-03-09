@@ -79,7 +79,7 @@ class _StoryAppState extends State<StoryApp> {
         builder: (context, provider, child) {
           return MaterialApp.router(
             title: 'Story App',
-            locale: provider.locale, 
+            locale: provider.locale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             routerDelegate: myRouterDelegate,

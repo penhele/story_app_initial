@@ -58,48 +58,48 @@ class PageConfiguration {
       unknown == false &&
       register == false &&
       loggedIn == null &&
-      storyId == null && 
+      storyId == null &&
       addStory == false;
 
   bool get isLoginPage =>
       unknown == false &&
       register == false &&
       loggedIn == false &&
-      storyId == null && 
+      storyId == null &&
       addStory == false;
 
   bool get isRegisterPage =>
       unknown == false &&
       register == true &&
       loggedIn == false &&
-      storyId == null && 
+      storyId == null &&
       addStory == false;
 
   bool get isHomePage =>
       unknown == false &&
       register == false &&
       loggedIn == true &&
-      storyId == null && 
+      storyId == null &&
       addStory == false;
 
   bool get isDetailPage =>
       unknown == false &&
       register == false &&
       loggedIn == true &&
-      storyId != null && 
+      storyId != null &&
       addStory == false;
 
   bool get isUnknownPage =>
       unknown == true &&
       register == false &&
       loggedIn == null &&
-      storyId == null && 
+      storyId == null &&
       addStory == false;
 
   bool get isAddStoryPage =>
       unknown == false &&
       register == false &&
-      loggedIn == false && 
+      loggedIn == false &&
       storyId == null &&
       addStory == true;
 }

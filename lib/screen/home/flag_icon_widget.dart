@@ -24,7 +24,10 @@ class FlagIconWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  final provider = Provider.of<LocalizationProvider>(context, listen: false);
+                  final provider = Provider.of<LocalizationProvider>(
+                    context,
+                    listen: false,
+                  );
                   provider.setLocale(locale);
                 },
               );

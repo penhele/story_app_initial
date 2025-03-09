@@ -160,8 +160,7 @@ class MyRouterDelegate extends RouterDelegate<PageConfiguration>
       selectedStory = configuration.storyId.toString();
     } else if (configuration.isAddStoryPage) {
       isAddingStory = true;
-    } else {
-    }
+    } else {}
     notifyListeners();
   }
 

@@ -35,7 +35,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.registerAppBar), centerTitle: true),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.registerAppBar),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
@@ -105,7 +108,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return AppLocalizations.of(context)!.passwordValidationError;
+                      return AppLocalizations.of(
+                        context,
+                      )!.passwordValidationError;
                     }
                     return null;
                   },

@@ -175,9 +175,7 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
     } catch (e) {
       scaffoldMessenger.showSnackBar(
         _buildSnackBar(
-          AppLocalizations.of(
-            context,
-          )!.errorUnexpected("{err}"),
+          AppLocalizations.of(context)!.errorUnexpected("{err}"),
           Colors.red,
         ),
       );

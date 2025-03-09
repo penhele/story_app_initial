@@ -43,7 +43,9 @@ class BodyOfDetailWidget extends StatelessWidget {
 
             Center(
               child: Text(
-                AppLocalizations.of(context)!.postedOn(_formatDate(story.createdAt)),
+                AppLocalizations.of(
+                  context,
+                )!.postedOn(_formatDate(story.createdAt)),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontStyle: FontStyle.italic,
                   color: Colors.grey[600],

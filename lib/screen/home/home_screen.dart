@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           const FlagIconWidget(),
-          const SizedBox.square(dimension: 8,),
+          const SizedBox.square(dimension: 8),
           IconButton(
             onPressed: () async {
               final authRead = context.read<AuthProvider>();
