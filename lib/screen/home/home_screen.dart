@@ -4,6 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:story_app_initial/screen/home/flag_icon_widget.dart';
 import '../../common.dart';
 import '../../screen/home/home_error_state_widget.dart';
 import '../../provider/home_provider.dart';
@@ -49,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("Story App"),
         centerTitle: true,
         actions: [
+          const FlagIconWidget(),
+          const SizedBox.square(dimension: 8,),
           IconButton(
             onPressed: () async {
               final authRead = context.read<AuthProvider>();

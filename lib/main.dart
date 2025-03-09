@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:story_app_initial/provider/localizations_provider.dart';
 import '../common.dart';
 import '../provider/add_story_provider.dart';
 import '../provider/home_provider.dart';
@@ -47,6 +48,9 @@ class _StoryAppState extends State<StoryApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // localization provider
+        ChangeNotifierProvider(create: (context) => LocalizationProvider()),
+
         ChangeNotifierProvider(create: (context) => authProvider),
         ChangeNotifierProvider(
           create:
@@ -71,13 +75,18 @@ class _StoryAppState extends State<StoryApp> {
           create: (context) => AddStoryProvider(ApiService(), AuthRepository()),
         ),
       ],
-      child: MaterialApp.router(
-        title: 'Story App',
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        routerDelegate: myRouterDelegate,
-        routeInformationParser: myRouteInformationParser,
-        backButtonDispatcher: RootBackButtonDispatcher(),
+      child: Consumer<LocalizationProvider>(
+        builder: (context, provider, child) {
+          return MaterialApp.router(
+            title: 'Story App',
+            locale: provider.locale, 
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            routerDelegate: myRouterDelegate,
+            routeInformationParser: myRouteInformationParser,
+            backButtonDispatcher: RootBackButtonDispatcher(),
+          );
+        },
       ),
     );
   }

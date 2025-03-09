@@ -33,7 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.loginAppBar), centerTitle: true),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.loginAppBar),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -81,7 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return AppLocalizations.of(context)!.passwordValidationError;
+                      return AppLocalizations.of(
+                        context,
+                      )!.passwordValidationError;
                     }
                     return null;
                   },
@@ -121,7 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               scaffoldMessenger.showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    AppLocalizations.of(context)!.invalidLoginMessage,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.invalidLoginMessage,
                                   ),
                                 ),
                               );
