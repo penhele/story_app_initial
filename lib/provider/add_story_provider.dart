@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import '../api/api_service.dart';
-import '../db/auth_repository.dart';
-import '../model/story/add_story_request.dart';
-import '../model/story/add_story_response.dart';
+import '../data/api/api_service.dart';
+import '../data/db/auth_repository.dart';
+import '../data/model/story/add_story_request.dart';
+import '../data/model/story/add_story_response.dart';
 
 class AddStoryProvider extends ChangeNotifier {
   final ApiService apiService;

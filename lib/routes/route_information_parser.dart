@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../model/page_configuration.dart';
+import '../data/model/page_configuration.dart';
 
 class MyRouteInformationParser
     extends RouteInformationParser<PageConfiguration> {

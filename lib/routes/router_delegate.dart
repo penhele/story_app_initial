@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../screen/upload/add_story_screen.dart';
-import '../db/auth_repository.dart';
-import '../model/page_configuration.dart';
+import '../data/db/auth_repository.dart';
+import '../data/model/page_configuration.dart';
 import '../screen/detail/detail_screen.dart';
 import '../screen/home/home_screen.dart';
-import '../screen/login_screen.dart';
-import '../screen/register_screen.dart';
-import '../screen/splash_screen.dart';
+import '../screen/auth/login_screen.dart';
+import '../screen/auth/register_screen.dart';
+import '../screen/splash/splash_screen.dart';
 
 class MyRouterDelegate extends RouterDelegate<PageConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
