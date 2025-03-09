@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:story_app_initial/common.dart';
 import '../../provider/story_list_provider.dart';
 import '../../data/model/story/add_story_request.dart';
 import '../../provider/add_story_provider.dart';
@@ -27,7 +28,10 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
     final addStoryProvider = context.watch<AddStoryProvider>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Story'), centerTitle: true),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.addStoryAppBar),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: SingleChildScrollView(
@@ -45,8 +49,8 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
               TextFormField(
                 controller: descriptionController,
                 decoration: InputDecoration(
-                  hintText: 'Input description',
-                  labelText: 'Description',
+                  hintText: AppLocalizations.of(context)!.descriptionHint,
+                  labelText: AppLocalizations.of(context)!.descriptionLabel,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -67,7 +71,7 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
                       onPressed: () async => await _uploadStory(context),
                       icon: const Icon(Icons.cloud_upload, color: Colors.white),
                       label: Text(
-                        'Upload',
+                        AppLocalizations.of(context)!.uploadLabel,
                         style: TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -118,7 +122,10 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
     final XFile? imageFile = homeProvider.imageFile;
     if (imageFile == null) {
       scaffoldMessenger.showSnackBar(
-        _buildSnackBar('Pilih gambar terlebih dahulu!', Colors.red),
+        _buildSnackBar(
+          AppLocalizations.of(context)!.errorSelectImage,
+          Colors.red,
+        ),
       );
       return;
     }
@@ -127,14 +134,20 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
     int fileSize = await file.length();
     if (fileSize > 1024 * 1024) {
       scaffoldMessenger.showSnackBar(
-        _buildSnackBar('File terlalu besar! Maksimum 1MB.', Colors.orange),
+        _buildSnackBar(
+          AppLocalizations.of(context)!.errorFileTooLarge,
+          Colors.orange,
+        ),
       );
       return;
     }
 
     if (descriptionController.text.trim().isEmpty) {
       scaffoldMessenger.showSnackBar(
-        _buildSnackBar('Deskripsi tidak boleh kosong!', Colors.red),
+        _buildSnackBar(
+          AppLocalizations.of(context)!.errorEmptyDescription,
+          Colors.red,
+        ),
       );
       return;
     }
@@ -153,12 +166,20 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
         widget.toHomeScreen();
       } else {
         scaffoldMessenger.showSnackBar(
-          _buildSnackBar('Upload gagal!', Colors.red),
+          _buildSnackBar(
+            AppLocalizations.of(context)!.errorUploadFailed,
+            Colors.red,
+          ),
         );
       }
     } catch (e) {
       scaffoldMessenger.showSnackBar(
-        _buildSnackBar('Terjadi kesalahan: $e', Colors.red),
+        _buildSnackBar(
+          AppLocalizations.of(
+            context,
+          )!.errorUnexpected("{err}"),
+          Colors.red,
+        ),
       );
     }
   }

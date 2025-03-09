@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../common.dart';
 
 class HomeErrorState extends StatelessWidget {
   final String errorMessage;
@@ -20,12 +21,12 @@ class HomeErrorState extends StatelessWidget {
           children: [
             Icon(Icons.error_outline_sharp, size: 80),
             const SizedBox(height: 16),
-            Text('Failed to load data'),
-            Text('Check your connection!'),
+            Text(AppLocalizations.of(context)!.failedToLoadData),
+            Text(AppLocalizations.of(context)!.checkYourConnection),
             const SizedBox(height: 8),
             Text(errorMessage, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
+            ElevatedButton(onPressed: onRetry, child: Text(AppLocalizations.of(context)!.retry)),
           ],
         ),
       ),

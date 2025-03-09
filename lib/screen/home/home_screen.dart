@@ -4,6 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
+import '../../common.dart';
 import '../../screen/home/home_error_state_widget.dart';
 import '../../provider/home_provider.dart';
 import '../../screen/home/story_list_widget.dart';
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (result) widget.onLogout();
             },
             icon: Icon(Icons.logout),
-            tooltip: "Logout",
+            tooltip: AppLocalizations.of(context)!.logoutTooltip,
           ),
         ],
       ),
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onRetry: _fetchStoryList,
               ),
             ),
-            _ => const Center(child: Text('Memuat data...')),
+            _ => Center(child: Text(AppLocalizations.of(context)!.loadingData)),
           };
         },
       ),
@@ -94,12 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SpeedDialChild(
             child: Icon(Icons.camera),
-            label: "Camera",
+            label: AppLocalizations.of(context)!.cameraLabel,
             onTap: () => _onCameraView(),
           ),
           SpeedDialChild(
             child: Icon(Icons.photo),
-            label: "Gallery",
+            label: AppLocalizations.of(context)!.galleryLabel,
             onTap: () => _onGalleryView(),
           ),
         ],

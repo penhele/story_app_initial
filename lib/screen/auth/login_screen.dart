@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../common.dart';
 import '../../data/model/auth/login_request.dart';
 import '../../provider/auth_provider.dart';
 
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login Screen'), centerTitle: true),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.loginAppBar), centerTitle: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -42,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Welcome Back!",
+                  AppLocalizations.of(context)!.welcomeBackText,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFF4F959D),
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "Please login to your account.",
+                  AppLocalizations.of(context)!.loginPromptText,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 24),
@@ -60,12 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email.';
+                      return AppLocalizations.of(context)!.emailValidationError;
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: AppLocalizations.of(context)!.emailLabel,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -80,12 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password.';
+                      return AppLocalizations.of(context)!.passwordValidationError;
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: "Password",
+                    labelText: AppLocalizations.of(context)!.passwordLabel,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -118,9 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               widget.onLogin();
                             } else {
                               scaffoldMessenger.showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   content: Text(
-                                    "Your email or password is invalid",
+                                    AppLocalizations.of(context)!.invalidLoginMessage,
                                   ),
                                 ),
                               );
@@ -134,8 +135,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text(
-                          "LOGIN",
+                        child: Text(
+                          AppLocalizations.of(context)!.loginButtonText,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
@@ -154,8 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text(
-                      "REGISTER",
+                    child: Text(
+                      AppLocalizations.of(context)!.registerButtonText,
                       style: TextStyle(color: Color(0xFF4F959D), fontSize: 16),
                     ),
                   ),

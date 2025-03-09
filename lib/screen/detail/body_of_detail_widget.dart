@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../common.dart';
 import '../../data/model/story/story.dart';
 
 class BodyOfDetailWidget extends StatelessWidget {
@@ -42,7 +43,7 @@ class BodyOfDetailWidget extends StatelessWidget {
 
             Center(
               child: Text(
-                "Posted on ${_formatDate(story.createdAt)}",
+                AppLocalizations.of(context)!.postedOn(_formatDate(story.createdAt)),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontStyle: FontStyle.italic,
                   color: Colors.grey[600],
@@ -56,7 +57,7 @@ class BodyOfDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Description  - - - ',
+                  AppLocalizations.of(context)!.descriptionTitle,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontStyle: FontStyle.italic,
                     color: Colors.black,

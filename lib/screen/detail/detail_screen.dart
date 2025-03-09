@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:story_app_initial/common.dart';
 import '../../screen/detail/detail_error_state_widget.dart';
 import '../../screen/detail/body_of_detail_widget.dart';
 import '../../provider/story_detail_provider.dart';
@@ -52,7 +53,7 @@ class _DetailScreenState extends State<DetailScreen> {
               errorMessage: message,
               onRetry: _fetchStoryDetail,
             ),
-            _ => const Center(child: Text('Memuat data...')),
+            _ => Center(child: Text(AppLocalizations.of(context)!.loadingData)),
           };
         },
       ),

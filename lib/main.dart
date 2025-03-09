@@ -1,11 +1,12 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import '../common.dart';
 import '../provider/add_story_provider.dart';
 import '../provider/home_provider.dart';
-import 'data/common/url_strategy.dart';
+import '../data/common/url_strategy.dart';
 import '../routes/route_information_parser.dart';
-import 'data/api/api_service.dart';
-import 'data/db/auth_repository.dart';
+import '../data/api/api_service.dart';
+import '../data/db/auth_repository.dart';
 import '../provider/auth_provider.dart';
 import '../provider/story_detail_provider.dart';
 import '../provider/story_list_provider.dart';
@@ -72,6 +73,8 @@ class _StoryAppState extends State<StoryApp> {
       ],
       child: MaterialApp.router(
         title: 'Story App',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         routerDelegate: myRouterDelegate,
         routeInformationParser: myRouteInformationParser,
         backButtonDispatcher: RootBackButtonDispatcher(),
