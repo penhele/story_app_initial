@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
@@ -57,13 +58,21 @@ class ApiService {
 
     String? mimeType = lookupMimeType(addStoryData.photo.path) ?? 'image/jpeg';
 
-    request.files.add(
-      await http.MultipartFile.fromPath(
+    if (kIsWeb) {
+      final bytes = await addStoryData.photo.readAsBytes();
+      request.files.add(http.MultipartFile.fromBytes(
+        "photo",
+        bytes,
+        filename: addStoryData.photo.name,
+        contentType: MediaType.parse(mimeType),
+      ));
+    } else {
+      request.files.add(await http.MultipartFile.fromPath(
         "photo",
         addStoryData.photo.path,
         contentType: MediaType.parse(mimeType),
-      ),
-    );
+      ));
+    }
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);

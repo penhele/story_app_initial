@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:story_app_initial/data/common/common.dart';
+import '../../data/common/common.dart';
 import '../../provider/story_list_provider.dart';
 import '../../data/model/story/add_story_request.dart';
 import '../../provider/add_story_provider.dart';
@@ -130,16 +130,19 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
       return;
     }
 
-    File file = File(imageFile.path);
-    int fileSize = await file.length();
-    if (fileSize > 1024 * 1024) {
-      scaffoldMessenger.showSnackBar(
-        _buildSnackBar(
-          AppLocalizations.of(context)!.errorFileTooLarge,
-          Colors.orange,
-        ),
-      );
-      return;
+    if (!kIsWeb) {
+      // Flutter Mobile/Desktop: Cek ukuran file
+      File file = File(imageFile.path);
+      int fileSize = await file.length();
+      if (fileSize > 1024 * 1024) {
+        scaffoldMessenger.showSnackBar(
+          _buildSnackBar(
+            AppLocalizations.of(context)!.errorFileTooLarge,
+            Colors.orange,
+          ),
+        );
+        return;
+      }
     }
 
     if (descriptionController.text.trim().isEmpty) {
