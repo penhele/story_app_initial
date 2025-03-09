@@ -59,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Email Field
                 TextFormField(
                   controller: emailController,
                   validator: (value) {

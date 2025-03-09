@@ -62,7 +62,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Name Field
                 TextFormField(
                   controller: nameController,
                   validator: (value) {
@@ -82,7 +81,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const SizedBox(height: 16),
 
-                // Email Field
                 TextFormField(
                   controller: emailController,
                   validator: (value) {
@@ -102,7 +100,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const SizedBox(height: 16),
 
-                // Password Field
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
@@ -125,7 +122,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const SizedBox(height: 24),
 
-                // Register Button
                 context.watch<AuthProvider>().isLoadingRegister
                     ? const Center(child: CircularProgressIndicator())
                     : SizedBox(
@@ -162,7 +158,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const SizedBox(height: 12),
 
-                // Login Button
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(

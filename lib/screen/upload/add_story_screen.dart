@@ -131,7 +131,6 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
     }
 
     if (!kIsWeb) {
-      // Flutter Mobile/Desktop: Cek ukuran file
       File file = File(imageFile.path);
       int fileSize = await file.length();
       if (fileSize > 1024 * 1024) {
