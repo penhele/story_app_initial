@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:story_app_initial/classes/localization.dart';
-import 'package:story_app_initial/common.dart';
+import 'package:story_app_initial/data/common/common.dart';
 import 'package:story_app_initial/provider/localizations_provider.dart';
 
 class FlagIconWidget extends StatelessWidget {

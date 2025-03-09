@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../common.dart';
+import '../../data/common/common.dart';
 
 class DetailErrorState extends StatelessWidget {
   final String errorMessage;

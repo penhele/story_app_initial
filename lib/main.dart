@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:story_app_initial/provider/localizations_provider.dart';
-import '../common.dart';
+import 'data/common/common.dart';
 import '../provider/add_story_provider.dart';
 import '../provider/home_provider.dart';
 import '../data/common/url_strategy.dart';
@@ -48,9 +48,7 @@ class _StoryAppState extends State<StoryApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // localization provider
         ChangeNotifierProvider(create: (context) => LocalizationProvider()),
-
         ChangeNotifierProvider(create: (context) => authProvider),
         ChangeNotifierProvider(
           create:
@@ -66,11 +64,7 @@ class _StoryAppState extends State<StoryApp> {
                 Provider.of<AuthProvider>(context, listen: false),
               ),
         ),
-
-        // home provider
         ChangeNotifierProvider(create: (context) => HomeProvider()),
-
-        // add story provider
         ChangeNotifierProvider(
           create: (context) => AddStoryProvider(ApiService(), AuthRepository()),
         ),
