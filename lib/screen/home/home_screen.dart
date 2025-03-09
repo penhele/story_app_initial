@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             StoryListLoadedState(data: var storyList) => ListView.builder(
+              padding: const EdgeInsets.only(bottom: 18),
               itemCount: storyList.length,
               itemBuilder: (context, index) {
                 final story = storyList[index];
